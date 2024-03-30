@@ -1,23 +1,22 @@
-import {
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-} from "@ionic/react";
-import "./Tab3.css";
-import Video from "../components/Video";
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import ExploreContainer from '../components/ExploreContainer';
+import './Tab3.css';
 
 const Tab3: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Video</IonTitle>
+          <IonTitle>Tab 3</IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <Video />
+        <IonHeader collapse="condense">
+          <IonToolbar>
+            <IonTitle size="large">Tab 3</IonTitle>
+          </IonToolbar>
+        </IonHeader>
+        <ExploreContainer name="Tab 3 page" />
       </IonContent>
     </IonPage>
   );
