@@ -7,6 +7,7 @@ import {
 } from "@ionic/react";
 import "./Tab3.css";
 import VideoPlayer from "../components/VideoPlayer";
+import Video from "../components/Video";
 
 const Tab3: React.FC = () => {
   return (
@@ -17,7 +18,7 @@ const Tab3: React.FC = () => {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <VideoPlayer />
+        <Video />
       </IonContent>
     </IonPage>
   );

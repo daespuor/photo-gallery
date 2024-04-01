@@ -1,9 +1,14 @@
 import Hls from "hls.js";
 import { useEffect, useRef } from "react";
 import "./Video.css";
+import { isPlatform } from "@ionic/react";
 
 export default function Video() {
   const videoRef = useRef(null);
+  let URL = "http://127.0.0.1:3033/playlist.m3u8";
+  if (isPlatform("android")) {
+    URL = "http://10.0.2.2:3033/playlist.m3u8";
+  }
   useEffect(() => {
     if (Hls.isSupported()) {
       console.log("HLS supported!");
@@ -35,12 +40,15 @@ export default function Video() {
           }
         }
       });
-      hls.loadSource("http://localhost:3033/playlist.m3u8");
+      hls.loadSource(URL);
       hls.attachMedia(videoRef.current!);
 
       return () => {
         hls.destroy();
       };
+    } else {
+      console.log("HLS not supported");
+      videoRef.current!.src = URL;
     }
   }, []);
   return <video id="video-frame" ref={videoRef} controls></video>;
