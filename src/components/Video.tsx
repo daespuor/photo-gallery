@@ -2,14 +2,22 @@ import Hls from "hls.js";
 import { useEffect, useRef } from "react";
 import "./Video.css";
 import { isPlatform } from "@ionic/react";
+import { Video as VideoType } from "../types/playlist";
 
-export default function Video() {
+type VideoProps = {
+  video: VideoType;
+};
+
+const Video: React.FC<VideoProps> = ({ video }) => {
   const videoRef = useRef(null);
-  let URL = "http://127.0.0.1:3033/playlist.m3u8";
+  let URL = video.url;
   if (isPlatform("android")) {
     URL = "http://10.0.2.2:3033/playlist.m3u8";
   }
   useEffect(() => {
+    if (!URL) {
+      return;
+    }
     if (Hls.isSupported()) {
       console.log("HLS supported!");
 
@@ -50,6 +58,8 @@ export default function Video() {
       console.log("HLS not supported");
       videoRef.current!.src = URL;
     }
-  }, []);
+  }, [URL]);
   return <video id="video-frame" ref={videoRef} controls></video>;
-}
+};
+
+export default Video;

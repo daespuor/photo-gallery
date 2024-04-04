@@ -1,6 +1,8 @@
 package main
 
 import (
+	"daespuor91/go/video/data"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
@@ -12,6 +14,7 @@ type NextFunc func(w http.ResponseWriter, req *http.Request)
 func AddCORS(nextFunc NextFunc) NextFunc {
 	return func(w http.ResponseWriter, req *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 		nextFunc(w, req)
 	}
 }
@@ -36,6 +39,19 @@ func handleStaticContent(prefix string, root http.FileSystem) http.Handler {
 	}
 	return http.HandlerFunc(AddCORS(handler))
 }
+func handleVideos(w http.ResponseWriter, req *http.Request) {
+	playlist, err := data.GetPlaylist()
+	if err != nil {
+		http.Error(w, "Error getting the playlist", http.StatusInternalServerError)
+	}
+	playlistToSend, errMarshalling := json.Marshal(playlist)
+	if errMarshalling != nil {
+		http.Error(w, "Error encoding the playlist", http.StatusTeapot)
+	}
+	w.Header().Set("Contet-type", "application/json")
+	w.Write(playlistToSend)
+
+}
 func main() {
 	currentPath, errWD := os.Getwd()
 	if errWD != nil {
@@ -46,6 +62,7 @@ func main() {
 
 	server := http.NewServeMux()
 	server.HandleFunc("/playlist.m3u8", AddCORS(handlePlaylist))
+	server.HandleFunc("/videos", AddCORS(handleVideos))
 	server.Handle("/", handleStaticContent(videoPrefix, http.Dir(currentPath)))
 	http.ListenAndServe(":3033", server)
 	fmt.Println("vim-go")
