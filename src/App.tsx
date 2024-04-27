@@ -10,7 +10,7 @@ import {
   setupIonicReact,
 } from "@ionic/react";
 import { IonReactRouter } from "@ionic/react-router";
-import { images, logOut, square, triangle, videocam } from "ionicons/icons";
+import { images, triangle, videocam } from "ionicons/icons";
 import { defineCustomElements } from "@ionic/pwa-elements/loader";
 import Tab1 from "./pages/Tab1";
 import Tab2 from "./pages/Tab2";
@@ -34,20 +34,12 @@ import "@ionic/react/css/display.css";
 
 /* Theme variables */
 import "./theme/variables.css";
-import { useEffect } from "react";
-import NavigationAuthenticationClient from "./config/navigation-authentication-client";
-import { useMsal } from "@azure/msal-react";
-import { Capacitor } from "@capacitor/core";
 
 setupIonicReact();
 
 defineCustomElements(window);
 
 const App: React.FC = () => {
-  const { instance } = useMsal();
-  useEffect(() => {
-    instance.setNavigationClient(new NavigationAuthenticationClient(instance));
-  }, []);
   return (
     <IonApp>
       <IonReactRouter>
@@ -78,19 +70,6 @@ const App: React.FC = () => {
             <IonTabButton tab="tab3" href="/tab3">
               <IonIcon aria-hidden="true" icon={videocam} />
               <IonLabel>Video</IonLabel>
-            </IonTabButton>
-            <IonTabButton
-              tab="logout"
-              onClick={() => {
-                console.log("logout");
-                instance.logoutRedirect();
-                if (Capacitor.isNativePlatform()) {
-                  window.location.reload();
-                }
-              }}
-            >
-              <IonIcon aria-hidden="true" icon={logOut} />
-              <IonLabel>Logout</IonLabel>
             </IonTabButton>
           </IonTabBar>
         </IonTabs>
