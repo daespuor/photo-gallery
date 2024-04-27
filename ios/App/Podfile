@@ -18,7 +18,9 @@ def capacitor_pods
   pod 'CapacitorKeyboard', :path => '../../node_modules/@capacitor/keyboard'
   pod 'CapacitorPreferences', :path => '../../node_modules/@capacitor/preferences'
   pod 'CapacitorStatusBar', :path => '../../node_modules/@capacitor/status-bar'
+  pod 'JoyidCapacitorNativePasskey', :path => '../../node_modules/@joyid/capacitor-native-passkey'
   pod 'CapacitorVideoPlayer', :path => '../../node_modules/capacitor-video-player'
+  pod 'CordovaPlugins', :path => '../capacitor-cordova-ios-plugins'
 end
 
 target 'App' do

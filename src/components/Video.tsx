@@ -9,7 +9,7 @@ type VideoProps = {
 };
 
 const Video: React.FC<VideoProps> = ({ video }) => {
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   let URL = video.url;
   if (isPlatform("android")) {
     URL = "http://10.0.2.2:3033/playlist.m3u8";

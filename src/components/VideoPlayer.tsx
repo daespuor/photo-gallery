@@ -14,7 +14,7 @@ import { OverlayEventDetail } from "@ionic/core/components";
 import "./VideoPlayer.css";
 
 const VideoPlayer: React.FC = () => {
-  const videoRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement | null | any>(null);
   const modalRef = useRef<HTMLIonModalElement>(null);
   async function handlePlay() {
     const url = "http://localhost:3033/playlist.m3u8";
@@ -70,6 +70,7 @@ const VideoPlayer: React.FC = () => {
           </IonText>
         </IonContent>
       </IonModal>
+      {/*@ts-ignore*/}
       <app-video-player>
         <div
           id="video-player"
@@ -77,6 +78,7 @@ const VideoPlayer: React.FC = () => {
           slot="fixed"
           className="video-player"
         ></div>
+        {/*@ts-ignore*/}
       </app-video-player>
     </IonContent>
   );
